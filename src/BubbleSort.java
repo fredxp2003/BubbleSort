@@ -1,19 +1,87 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
 public class BubbleSort {
-    public static void main(String[] args) throws Exception {
-        // create a bubble sort program
-        int[] arr = { 5, 4, 3, 2, 1 };
-        int temp = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 1; j < (arr.length - i); j++) {
-                if (arr[j - 1] > arr[j]) {
-                    temp = arr[j - 1];
-                    arr[j - 1] = arr[j];
-                    arr[j] = temp;
-                }
+
+    public static void printArray(int[] array) {
+        for (int a : array) {
+            System.out.print(a + " ");
+        }
+        System.out.println();
+    }
+
+    public static int[] createRandomArray(int arrayLength) {
+        int[] array = new int[arrayLength];
+        Random random = new Random();
+        for (int i = 0; i < arrayLength; i++) {
+            array[i] = random.nextInt(100);
+        }
+        return array;
+    }
+
+    public static void writeArrayToFile(int[] array, String fileName){
+        try  {
+        FileWriter fileWriter = new FileWriter(fileName);
+        for (int a : array) {
+            fileWriter.write(a + "\n");
+            fileWriter.flush();
+        }
+        fileWriter.close();
+        
+    }
+        catch(IOException e){
+            System.out.println("Encountered an error while writing to file");
+            e.printStackTrace();
+        }
+    }
+
+    public static int[] readArrayFromFile(String fileName) throws FileNotFoundException{
+        File file = new File(fileName);
+        Scanner scanner = new Scanner(file);
+        ArrayList arrayList = new ArrayList<>();
+        while (scanner.hasNextLine()){
+            String str = scanner.nextLine();
+            int a = Integer.parseInt(str);
+            arrayList.add(a);
+        }
+        scanner.close();
+
+        int[] array = new int[arrayList.size()];
+        for (int i = 0; i < arrayList.size(); i++){
+            array[i] = (int) arrayList.get(i);
+        }
+        return array;
+    }
+
+    public static void bubbleSort(int[] array) {
+        for (int i = array.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (array[j] > array[j + 1]) {
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                } 
             }
         }
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
-        }
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        int arrayLength = 5;
+        int[] array = createRandomArray(arrayLength);
+        String fileName = "integers.txt";
+
+        printArray(array);
+        writeArrayToFile(array, fileName);
+
+        array = readArrayFromFile(fileName);
+        bubbleSort(array);
+
+        writeArrayToFile(array, "sorted.txt");
     }
 }
