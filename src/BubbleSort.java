@@ -1,12 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-
-import javax.swing.JFileChooser;
+import java.io.*;
+import java.util.*;
 
 public class BubbleSort {
 
@@ -59,7 +52,7 @@ public class BubbleSort {
         return array;
     }
 
-    public static void bubbleSort(int[] array) {
+    public static String bubbleSort(int[] array) {
         for (int i = array.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (array[j] > array[j + 1]) {
@@ -69,6 +62,7 @@ public class BubbleSort {
                 }
             }
         }
+        return Arrays.toString(array);
     }
 
     public static void main(String[] args) throws Exception {
@@ -84,17 +78,20 @@ public class BubbleSort {
                     arrayLength = scanner.nextInt();
                     int[] array = createRandomArray(arrayLength);
                     String fileName = "integers.txt";
+                    System.out.print("Random Array:  ");
                     printArray(array);
                     writeArrayToFile(array, fileName);
                     array = readArrayFromFile(fileName);
-                    bubbleSort(array);
+                    String sortedArray = bubbleSort(array);
+                    System.out.println("Sorted Array:  " + sortedArray);
                     writeArrayToFile(array, "sorted.txt");
+                    System.out.println("Sorted array written to file.");
                     break;
                 case 2:
                     System.out.println("Enter array length");
                     arrayLength = scanner.nextInt();
                     array = new int[arrayLength];
-                    System.out.println("Enter array elements");
+                    System.out.print("Enter array elements one at a time and press enter:  ");
                     for (int i = 0; i < arrayLength; i++) {
                         array[i] = scanner.nextInt();
                     }
@@ -107,7 +104,6 @@ public class BubbleSort {
                     break;
 
             }
-
         }
     }
 }
