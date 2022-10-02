@@ -1,8 +1,16 @@
+// Logan Pizzurro
+// CSI-2300
+// Prof. Ma, TA. Sa
+
 import java.io.*;
 import java.util.*;
 
 public class BubbleSort {
 
+    /**
+     * Prints the array to the console
+     * @param array
+     */
     public static void printArray(int[] array) {
         for (int a : array) {
             System.out.print(a + " ");
@@ -10,6 +18,11 @@ public class BubbleSort {
         System.out.println();
     }
 
+    /**
+     * Creates a random array of integers of a size specified by the user
+     * @param arrayLength the length of the array to be generated
+     * @return the generated array
+     */
     public static int[] createRandomArray(int arrayLength) {
         int[] array = new int[arrayLength];
         Random random = new Random();
@@ -19,12 +32,17 @@ public class BubbleSort {
         return array;
     }
 
+    /**
+     * Writes the unsorted array to a file
+     * @param array the array to be sorted
+     * @param fileName the name of the file to be written to
+     */
     public static void writeArrayToFile(int[] array, String fileName) {
         try {
             FileWriter fileWriter = new FileWriter(fileName);
             for (int a : array) {
                 fileWriter.write(a + "\n");
-                fileWriter.flush();
+
             }
             fileWriter.close();
 
@@ -34,6 +52,12 @@ public class BubbleSort {
         }
     }
 
+    /**
+     * Reads the array from a file
+     * @param fileName the name of the file to be read from
+     * @return the array read from the file
+     * @throws FileNotFoundException
+     */
     public static int[] readArrayFromFile(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner scanner = new Scanner(file);
@@ -52,6 +76,11 @@ public class BubbleSort {
         return array;
     }
 
+    /**
+     * Sorts the array using the bubble sort algorithm
+     * @param array the array to be sorted
+     * @return the sorted array
+     */
     public static String bubbleSort(int[] array) {
         for (int i = array.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
@@ -78,13 +107,14 @@ public class BubbleSort {
                     arrayLength = scanner.nextInt();
                     int[] array = createRandomArray(arrayLength);
                     String fileName = "integers.txt";
+                    String sortedFileName = "sorted.txt";
                     System.out.print("Random Array:  ");
                     printArray(array);
                     writeArrayToFile(array, fileName);
                     array = readArrayFromFile(fileName);
                     String sortedArray = bubbleSort(array);
                     System.out.println("Sorted Array:  " + sortedArray);
-                    writeArrayToFile(array, "sorted.txt");
+                    writeArrayToFile(array, sortedFileName);
                     System.out.println("Sorted array written to file.");
                     break;
                 case 2:
@@ -97,10 +127,12 @@ public class BubbleSort {
                     }
                     bubbleSort(array);
                     printArray(array);
-                    break;
                 case 3:
                     System.out.print("Goodbye");
                     System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice");
                     break;
 
             }
